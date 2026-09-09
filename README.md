@@ -1,210 +1,244 @@
-WEFiX
+# WEFiX
 
-WEFiX is a full-stack MERN home-services booking platform built as a portfolio flagship project.
+> A full-stack home-services booking platform built with the MERN stack.
 
-Customers can discover services, manage their profile and saved addresses, book appointments, make sandbox payments, receive notifications, and review completed services. Providers can manage their profile, offered services, available bookings, and booking lifecycle. Administrators can manage users, roles, provider services, and bookings.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-WEFiX-blue?style=for-the-badge)](https://field-link-project-one.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-Render-46E3B7?style=for-the-badge)](https://wefix-backend-9qm1.onrender.com)
+[![Database](https://img.shields.io/badge/Database-MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
 
-Live Application
+## 🌐 Live Demo
+
+**Frontend:** https://field-link-project-one.vercel.app
+
+**Backend:** https://wefix-backend-9qm1.onrender.com
+
+**Health Check:** https://wefix-backend-9qm1.onrender.com/health
+
+**Source Code:** Use the repository URL shown in the GitHub repository.
+
+---
+
+## 📌 About The Project
+
+WEFiX is a production-deployed full-stack home-services booking platform.
+
+The application connects customers with service providers through a complete booking workflow. Customers can discover services, schedule appointments, manage addresses, make sandbox payments, receive notifications, and review completed services.
+
+The platform also includes dedicated provider and administrator experiences with role-based access control.
+
+This project was built as a **portfolio flagship project** to demonstrate practical full-stack development, security, database design, deployment, and real-world application architecture.
+
+---
+
+## ✨ Features
+
+### 👤 Customer
+
+- Create an account and log in securely
+- Persistent authentication
+- Browse available services
+- Search and filter services
+- View detailed service information
+- Book future appointments
+- Enforce minimum one-hour notice for same-day appointments
+- Manage saved service addresses
+- View booking history
+- Receive a unique booking ID
+- Make sandbox payments
+- Cancel eligible bookings
+- Review completed services
+- Receive notifications
+- Manage profile information
+- Responsive mobile booking experience
+
+### 🧑‍🔧 Provider
+
+- Provider role authentication
+- Provider profile management
+- Manage offered services
+- View matching available bookings
+- Accept bookings
+- Complete bookings
+- Cancel/release confirmed bookings
+- Receive booking notifications
+- Track completed jobs
+
+### 👑 Administrator
+
+- Secure admin access
+- View and manage users
+- Change user roles
+- Manage provider profiles
+- Assign provider services
+- View and manage bookings
+- Administrative visibility across the platform
+
+---
+
+## 🛠️ Tech Stack
+
+| Area | Technology |
+|---|---|
+| Frontend | React |
+| Build Tool | Vite |
+| Routing | React Router |
+| Backend | Node.js + Express |
+| Database | MongoDB |
+| ODM | Mongoose |
+| Authentication | JWT + HttpOnly Cookies |
+| Password Hashing | bcryptjs |
+| Validation | Zod + Mongoose |
+| Security | Helmet, CORS, Rate Limiting |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
+| Database Hosting | MongoDB Atlas |
+| Source Control | GitHub |
 
-Frontend: https://field-link-project-one.vercel.app
+---
 
-Backend: https://wefix-backend-9qm1.onrender.com
+## 🏗️ Architecture
 
-Backend health check: https://wefix-backend-9qm1.onrender.com/health
+```text
+┌─────────────────────┐
+│     User Browser    │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Vercel               │
+│ React + Vite Client  │
+└──────────┬──────────┘
+           │ /api
+           ▼
+┌─────────────────────┐
+│ Render               │
+│ Node + Express API  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ MongoDB Atlas        │
+│ Production Database  │
+└─────────────────────┘
+```
 
-Tech Stack
+---
 
-Frontend
+## 🔐 Authentication & Security
 
-React
+Security was treated as part of the application architecture rather than an afterthought.
 
-Vite
+WEFiX includes:
 
-React Router
+- JWT authentication using HttpOnly cookies
+- Secure cookies in production
+- SameSite cookie configuration
+- bcrypt password hashing
+- Server-side role-based authorization
+- Customer/provider ownership checks
+- IDOR protection
+- Payment ownership validation
+- Review ownership validation
+- Notification ownership validation
+- Provider service authorization
+- Zod request validation
+- Mongoose validation
+- Helmet security headers
+- Restricted CORS configuration
+- JSON request-size limiting
+- API rate limiting
+- Login and registration rate limiting
+- Disabled `x-powered-by`
+- JWT tokens are not stored in localStorage
 
-Fetch API / Axios where applicable
+---
 
-Responsive dark UI
+## 📅 Booking System
 
-Backend
+WEFiX uses a complete booking lifecycle rather than a simple form submission.
 
-Node.js
+Customers can create future appointments and providers can accept and complete them.
 
-Express
+### Booking rules
 
-MongoDB
+- Past appointments are rejected.
+- Same-day appointments require at least **1 hour of advance notice**.
+- Future-day appointments are allowed even when they are less than one hour away.
+- Appointment validation is enforced on both the frontend and backend.
+- Booking ownership is verified server-side.
 
-Mongoose
+### Booking IDs
 
-JWT authentication
+Every booking receives a unique public reference such as:
 
-HttpOnly cookie authentication
+```text
+WEF-20260910-K7M4Q2XA
+```
 
-bcryptjs
+Booking references are immutable and unique.
 
-Zod validation
+---
 
-Helmet
+## 💳 Payments
 
-CORS
+WEFiX includes a **sandbox payment flow** for demonstrating payment-state handling.
 
-express-rate-limit
+> **Important:** Payments are simulated and are not connected to a real payment processor.
 
-Deployment
+The payment system demonstrates:
 
-Vercel — frontend
+- Customer ownership validation
+- Successful payment state
+- Failed payment state
+- Prevention of payment on cancelled bookings
+- Prevention of duplicate payment
 
-Render — backend
+---
 
-MongoDB Atlas — production database
+## ⭐ Reviews & Notifications
 
-GitHub — source control
+### Reviews
 
-Core Features
+Customers can review completed bookings.
 
-Customer
+The backend verifies:
 
-Register / login / logout
+- The booking belongs to the customer
+- The booking is completed
+- A provider exists
+- A review has not already been submitted
 
-Persistent authentication
+### Notifications
 
-Browse active services
+The application provides notifications for important booking events between customers and providers.
 
-Search and filter services
+---
 
-View service details
+## 📱 Responsive UI
 
-Book future appointments
+WEFiX was tested across desktop and mobile layouts.
 
-Same-day minimum one-hour lead time
+The mobile booking experience was specifically refined so the flow is:
 
-Saved service addresses
+```text
+View Service
+      ↓
+Service Details
+      ↓
+Book Now
+      ↓
+Booking Form
+```
 
-Booking history
+The interface automatically scrolls to the relevant section so customers do not have to search for the next action.
 
-Booking reference IDs
+---
 
-Sandbox payment
+## 📂 Project Structure
 
-Cancel eligible bookings
-
-Review completed bookings
-
-Notifications
-
-Profile management
-
-Responsive/mobile booking flow
-
-Provider
-
-Provider authentication and role-based access
-
-Provider profile
-
-Manage provider information
-
-Provider service eligibility
-
-View available matching bookings
-
-Accept bookings
-
-Complete bookings
-
-Cancel/release confirmed bookings
-
-Booking notifications
-
-Completed-job count
-
-Admin
-
-Admin authentication
-
-User management
-
-Customer/provider/admin role management
-
-Provider management
-
-Provider service assignment
-
-Booking management
-
-Admin booking visibility
-
-Role synchronization safeguards
-
-Booking Rules
-
-WEFiX enforces appointment timing on both the frontend and backend.
-
-Appointments cannot be scheduled in the past.
-
-Same-day appointments require at least one hour of advance notice.
-
-Future-day appointments are allowed even when they are less than one hour away.
-
-Booking ownership and provider authorization are enforced server-side.
-
-Booking IDs
-
-Each booking has a public booking reference in the format:
-
-WEF-YYYYMMDD-XXXXXXXX
-
-The reference is immutable and unique and is displayed in customer, provider, and admin booking views.
-
-Security
-
-The application includes:
-
-JWT authentication through HttpOnly cookies
-
-Secure cookies in production
-
-SameSite cookie configuration
-
-bcrypt password hashing
-
-Server-side role-based authorization
-
-Ownership checks for bookings, payments, reviews, and notifications
-
-Provider service authorization
-
-Zod input validation
-
-MongoDB/Mongoose validation
-
-Helmet security headers
-
-Exact CORS origin configuration
-
-JSON request-size limiting
-
-General API rate limiting
-
-Login/registration rate limiting
-
-x-powered-by disabled
-
-No JWT stored in localStorage
-
-No dangerouslySetInnerHTML
-
-No eval
-
-No shell execution
-
-No file-upload attack surface
-
-No AI endpoint in the current V1
-
-Project Structure
-
-WEFiX/
+```text
+Field-Link-project/
+│
 ├── client/
 │   ├── public/
 │   │   └── images/
@@ -230,292 +264,204 @@ WEFiX/
 │   ├── server.js
 │   └── package.json
 │
-└── README.md
+├── README.md
+└── .gitignore
+```
 
-Local Development
+---
 
-Requirements
+## 🚀 Running The Project Locally
 
-Node.js
+### Prerequisites
 
-npm
+You will need:
 
-MongoDB local instance or MongoDB Atlas
+- Node.js
+- npm
+- MongoDB local instance or MongoDB Atlas
+- Git
 
-Git
+### 1. Clone the repository
 
-1. Clone the repository
-
-git clone <your-github-repository-url>
+```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
 cd Field-Link-project
+```
 
-2. Install backend dependencies
+### 2. Install backend dependencies
 
+```bash
 cd server
 npm install
+```
 
-Create server/.env from server/.env.example.
+### 3. Configure backend environment variables
 
-Example development configuration:
+Create:
 
+```text
+server/.env
+```
+
+Use the example environment configuration:
+
+```env
 NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://127.0.0.1:27017/wefix
 CLIENT_ORIGIN=http://localhost:5173
-JWT_SECRET=replace-with-a-long-random-secret
+JWT_SECRET=your-development-secret
 JWT_EXPIRES_IN=7d
+```
 
-3. Seed services
+**Never commit `.env` files or real credentials.**
 
-From the server directory:
+### 4. Start the backend
 
-npm run seed:services
-
-If service image URLs need to be assigned, use the existing service-image migration/setup script in server/scripts/ as appropriate for the current database.
-
-4. Start the backend
-
-Development:
-
+```bash
 npm run dev
+```
 
-Production-style local start:
-
-npm start
-
-5. Install and run the frontend
+### 5. Install frontend dependencies
 
 Open another terminal:
 
+```bash
 cd client
 npm install
+```
+
+### 6. Start the frontend
+
+```bash
 npm run dev
+```
 
-The Vite development server normally runs on:
+The frontend normally runs at:
 
+```text
 http://localhost:5173
+```
 
-The Vite development proxy forwards /api requests to the configured backend target.
+---
 
-Environment Variables
+## 🌍 Deployment
+
+WEFiX is deployed using three services.
 
-Server
+### Frontend — Vercel
 
-NODE_ENV=development
-PORT=5000
-MONGODB_URI=...
-CLIENT_ORIGIN=http://localhost:5173
-JWT_SECRET=...
-JWT_EXPIRES_IN=7d
+The React/Vite frontend is deployed on Vercel.
 
-Client
+**Live:** https://field-link-project-one.vercel.app
 
-The current client uses relative /api/... requests. Local development can optionally use:
+### Backend — Render
 
-VITE_API_PROXY_TARGET=http://localhost:5000
+The Express backend is deployed on Render.
 
-Never commit real secrets.
+**Live:** https://wefix-backend-9qm1.onrender.com
 
-Production Deployment
+### Database — MongoDB Atlas
 
-Frontend — Vercel
+Production data is stored in MongoDB Atlas.
 
-Root directory: client
+---
 
-Framework/preset: Vite
+## 🧪 QA & Testing
 
-Build command: npm run build
+WEFiX went through a structured QA process covering:
 
-Output directory: dist
+- End-to-end customer flows
+- End-to-end provider flows
+- End-to-end admin flows
+- Authentication
+- Role-based access control
+- Authorization
+- IDOR/ownership testing
+- Error handling
+- Edge cases
+- Responsive/mobile UI
+- Production deployment
+- Production authentication persistence
+- Deep-link refresh
+- Sandbox payment
+- Live booking workflows
 
-The project includes a Vercel rewrite configuration for:
+### Final QA Status
 
-/api/* → production Render backend
+| Stage | Status |
+|---|---|
+| Foundation | ✅ PASS |
+| Authentication & RBAC | ✅ PASS |
+| Customer Features | ✅ PASS |
+| Backend / API / Database | ✅ PASS |
+| Provider & Admin Features | ✅ PASS |
+| Booking / Payments / Reviews / Notifications | ✅ PASS |
+| UI / UX | ✅ PASS |
+| Responsive / Mobile | ✅ PASS |
+| Production Verification | ✅ PASS |
 
-SPA routes → /index.html
+**Overall V1 status: 🟢 Production-ready**
 
-Backend — Render
+---
 
-Root directory: server
+## 🎯 What This Project Demonstrates
 
-Build command: npm install
+WEFiX demonstrates practical experience with:
 
-Start command: node server.js
+- Full-stack MERN development
+- React component architecture
+- REST API development
+- Express middleware
+- MongoDB data modeling
+- Mongoose relationships and queries
+- JWT authentication
+- HttpOnly cookie authentication
+- Role-based access control
+- Server-side authorization
+- IDOR prevention
+- Booking and state management
+- Scheduling validation
+- Payment-state handling
+- Notifications
+- Reviews
+- Responsive UI development
+- Production deployment
+- Environment and secrets management
+- Security hardening
+- End-to-end testing
 
-Production environment variables must be configured in Render rather than committed to Git.
+---
 
-Database — MongoDB Atlas
+## 🔮 Possible V2 Improvements
 
-Production uses the WEFiX production Atlas cluster.
+The current V1 is intentionally focused. Possible future improvements include:
 
-Atlas network access must allow the production backend to connect while avoiding unnecessary public access.
+- Real payment gateway integration
+- Email and SMS notifications
+- Provider location/map matching
+- Real-time customer/provider chat
+- Calendar integrations
+- Automated unit/integration tests
+- CI/CD testing
+- Advanced monitoring and observability
+- Advanced analytics
+- AI-powered service discovery or support
 
-Testing / QA Status
+---
 
-WEFiX V1 completed the planned development and QA stages.
+## 👨‍💻 Portfolio Note
 
-Completed
+WEFiX was built as a portfolio project to demonstrate the ability to design, develop, secure, test, and deploy a real-world multi-role web application.
 
-Foundation
+The focus was not only on making the UI work, but also on:
 
-Authentication and RBAC
+**Architecture → Security → Authorization → Data integrity → UX → Testing → Production deployment**
 
-Customer functionality
+---
 
-Backend/API/database functionality
+## 📄 License
 
-Provider functionality
+This project is currently presented as a portfolio project.
 
-Admin functionality
-
-Booking and provider matching
-
-Payments
-
-Reviews
-
-Notifications
-
-Profiles
-
-Search/filtering
-
-UI/UX audit
-
-Responsive/mobile QA
-
-End-to-end flow testing
-
-Cross-role authorization / IDOR testing
-
-Error and edge-case testing
-
-Production deployment
-
-Live customer flow
-
-Live provider flow
-
-Live admin flow
-
-Production authentication
-
-Deep-link refresh
-
-Sandbox payment
-
-Mobile booking UX
-
-Important Production Notes
-
-Sandbox payments
-
-Payments in V1 are intentionally sandbox/demo payments. They are not connected to a real payment processor and must not be represented as real financial processing.
-
-Secrets
-
-Never commit:
-
-.env
-
-production MongoDB credentials
-
-JWT secrets
-
-API keys
-
-passwords
-
-Use .env.example files for documentation only.
-
-Production secret rotation
-
-If any production credential or database password has ever been exposed outside the intended secret manager, rotate it before treating the deployment as fully secured.
-
-Known V1 Scope Limitations
-
-The current V1 does not include:
-
-Real payment processing
-
-Real-time chat
-
-AI-powered features
-
-File-upload workflows
-
-Advanced provider location/routing
-
-Production-grade observability/alerting infrastructure
-
-Automated CI/CD test pipelines
-
-These are potential future improvements rather than blockers for the current portfolio V1.
-
-Future Improvements
-
-Potential V2 work:
-
-Real payment provider integration
-
-Email/SMS notifications
-
-Provider location and map matching
-
-Real-time messaging
-
-Calendar integrations
-
-Automated tests and CI
-
-Structured logging and monitoring
-
-Provider availability calendars
-
-Advanced search and sorting
-
-Customer/provider analytics
-
-AI-assisted service discovery or support, with dedicated AI security controls
-
-Portfolio Positioning
-
-WEFiX demonstrates practical full-stack engineering across:
-
-React frontend architecture
-
-REST API design
-
-Express middleware
-
-MongoDB/Mongoose data modeling
-
-Authentication and authorization
-
-Role-based access control
-
-Ownership/IDOR protection
-
-Booking state management
-
-Scheduling validation
-
-Payment-state handling
-
-Notifications
-
-Reviews
-
-Responsive UI
-
-Production deployment
-
-Environment/secrets management
-
-Security hardening
-
-End-to-end QA
-
-License
-
-This project is a portfolio project. Add a formal license here if you decide to distribute the source under one.
+Add a formal open-source license if you decide to distribute the source code under one.
