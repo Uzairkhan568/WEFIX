@@ -1,6 +1,7 @@
 const ProviderProfile = require("../models/ProviderProfile");
 const Service = require("../models/Service");
 const Booking = require("../models/Booking");
+const User = require("../models/User");
 
 async function getMyProviderProfile(req, res) {
     const profile = await ProviderProfile.findOne({
@@ -91,9 +92,19 @@ async function updateMyProviderProfile(req, res) {
         throw err;
     }
 
+    // req.user is the authenticated user payload, not a Mongoose document.
+    // Fetch the actual User document before changing and saving the name.
     if (name !== undefined) {
-        req.user.name = name.trim();
-        await req.user.save();
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            const err = new Error("User not found.");
+            err.statusCode = 404;
+            throw err;
+        }
+
+        user.name = name.trim();
+        await user.save();
     }
 
     if (bio !== undefined) {
@@ -194,7 +205,12 @@ async function updateProviderServicesByAdmin(req, res) {
         providerId
     ).populate("user", "role isActive");
 
-    if (!profile || !profile.user || profile.user.role !== "provider" || !profile.user.isActive) {
+    if (
+        !profile ||
+        !profile.user ||
+        profile.user.role !== "provider" ||
+        !profile.user.isActive
+    ) {
         const err = new Error(
             "Provider profile not found."
         );
