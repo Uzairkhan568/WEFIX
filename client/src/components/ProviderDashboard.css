@@ -1,6 +1,6 @@
 /* Stage 7 — Provider dashboard */
 .provider-dashboard{width:min(100% - 32px,1000px);margin:0 auto;padding:clamp(28px,5vw,56px) 0}
-.provider-dashboard>h2{margin:0 0 28px;color:var(--clr-text);font-size:clamp(1.8rem,4vw,2.3rem);letter-spacing:-.03em)}
+.provider-dashboard>h2{margin:0 0 28px;color:var(--clr-text);font-size:clamp(1.8rem,4vw,2.3rem);letter-spacing:-.03em}
 .provider-dashboard>h3{margin:34px 0 16px;padding-top:24px;border-top:1px solid var(--clr-border);color:var(--clr-text);font-size:1.2rem}
 .jobs-list{display:grid;gap:16px;margin-bottom:28px}
 .job-card{padding:22px;background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:border-color var(--ease),box-shadow var(--ease)}
