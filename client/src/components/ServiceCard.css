@@ -1,4 +1,8 @@
 .service-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
     background: #111a2d;
     border: 1px solid #2a3a55;
     border-radius: var(--radius-lg);
@@ -13,11 +17,17 @@
 }
 
 .service-card-image {
-    display: block;
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    background: var(--clr-gray-100);
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 100% !important;
+    height: 190px !important;
+    min-height: 190px;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    background: #0b1324;
 }
 
 .service-card h3 {
@@ -28,11 +38,13 @@
 .service-card p {
     margin: 0 20px 20px;
     color: #9fb3cf;
+    line-height: 1.6;
 }
 
 .service-card button {
     display: block;
-    margin: 0 auto 20px;
+    width: fit-content;
+    margin: auto auto 20px;
     padding: 10px 20px;
     border: none;
     border-radius: var(--radius-md);
@@ -41,7 +53,9 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 150ms ease, transform 150ms ease;
+    transition:
+        background-color 150ms ease,
+        transform 150ms ease;
 }
 
 .service-card button:hover {
@@ -52,8 +66,55 @@
     transform: translateY(1px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .service-card-image {
-        height: 160px;
+        height: 175px !important;
+        min-height: 175px;
+    }
+}
+
+@media (max-width: 600px) {
+    .service-card {
+        border-radius: var(--radius-md);
+    }
+
+    .service-card-image {
+        width: 100% !important;
+        min-width: 100% !important;
+        height: 150px !important;
+        min-height: 150px;
+    }
+
+    .service-card h3 {
+        margin: 14px 10px 6px;
+        font-size: 1.05rem;
+    }
+
+    .service-card p {
+        margin: 0 10px 14px;
+        font-size: 0.9rem;
+        line-height: 1.45;
+    }
+
+    .service-card button {
+        width: calc(100% - 20px);
+        margin: auto 10px 12px;
+        min-height: 44px;
+        padding: 9px 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .service-card-image {
+        height: 140px !important;
+        min-height: 140px;
+    }
+
+    .service-card h3 {
+        font-size: 1rem;
+    }
+
+    .service-card p {
+        font-size: 0.85rem;
     }
 }

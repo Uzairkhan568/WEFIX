@@ -3,12 +3,12 @@ const connectDatabase = require("../config/db");
 const Service = require("../models/Service");
 
 const serviceImages = {
-    plumbing: "/images/services/plumbing.svg",
-    electrical: "/images/services/electrical.svg",
-    cleaning: "/images/services/cleaning.svg",
-    carpentry: "/images/services/carpentry.svg",
-    painting: "/images/services/painting.svg",
-    "pest-control": "/images/services/pest-control.svg",
+    plumbing: "/images/services/plumbing.jpg",
+    electrical: "/images/services/electrical.jpg",
+    cleaning: "/images/services/cleaning.jpg",
+    carpentry: "/images/services/carpentry.jpg",
+    painting: "/images/services/painting.jpg",
+    "pest-control": "/images/services/pest-control.jpg",
 };
 
 async function setServiceImages() {

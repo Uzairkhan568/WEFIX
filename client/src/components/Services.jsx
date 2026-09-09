@@ -61,6 +61,40 @@ function Services({ searchTerm }) {
         (selectedCategory === "all" ||
             selectedService.name === selectedCategory);
 
+    const scrollToElement = (element) => {
+        if (!element) return;
+
+        setTimeout(() => {
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }, 50);
+    };
+
+    const handleSelectService = (service) => {
+        setSelectedService(service);
+        setBookingStarted(false);
+
+        setTimeout(() => {
+            const detailsElement =
+                document.querySelector(".service-details");
+
+            scrollToElement(detailsElement);
+        }, 100);
+    };
+
+    const handleStartBooking = () => {
+        setBookingStarted(true);
+
+        setTimeout(() => {
+            const bookingElement =
+                document.querySelector(".booking-form");
+
+            scrollToElement(bookingElement);
+        }, 150);
+    };
+
     return (
         <section id="services">
             <h2>Popular Services</h2>
@@ -80,7 +114,10 @@ function Services({ searchTerm }) {
                     }}
                 >
                     {categories.map((category) => (
-                        <option key={category} value={category}>
+                        <option
+                            key={category}
+                            value={category}
+                        >
                             {category === "all"
                                 ? "All Services"
                                 : category}
@@ -108,7 +145,9 @@ function Services({ searchTerm }) {
                         Loading services...
                     </p>
                 ) : loadError ? (
-                    <p className="no-services">{loadError}</p>
+                    <p className="no-services">
+                        {loadError}
+                    </p>
                 ) : filteredServices.length > 0 ? (
                     filteredServices.map((service) => (
                         <ServiceCard
@@ -116,10 +155,9 @@ function Services({ searchTerm }) {
                             name={service.name}
                             description={service.description}
                             imageUrl={service.imageUrl}
-                            onSelect={() => {
-                                setSelectedService(service);
-                                setBookingStarted(false);
-                            }}
+                            onSelect={() =>
+                                handleSelectService(service)
+                            }
                         />
                     ))
                 ) : (
@@ -132,7 +170,7 @@ function Services({ searchTerm }) {
             {selectedServiceMatchesSearch && (
                 <ServiceDetails
                     service={selectedService}
-                    onBook={() => setBookingStarted(true)}
+                    onBook={handleStartBooking}
                 />
             )}
 
